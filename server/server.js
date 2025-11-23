@@ -3,12 +3,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// Fix for ES modules __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -31,9 +25,6 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Serve static files from React build
-app.use(express.static(path.join(__dirname, '../client/dist')));
-
 // Initialize database
 initDB();
 
@@ -54,8 +45,8 @@ app.get('/:code', async (req, res) => {
   try {
     const { code } = req.params;
     
-    // Skip if it's a file request or known routes
-    if (code.includes('.') || code === 'healthz' || code === 'api') {
+    // Skip if it's a file request or health check
+    if (code.includes('.') || code === 'healthz') {
       return res.status(404).json({ error: 'Not found' });
     }
     
@@ -76,14 +67,10 @@ app.get('/:code', async (req, res) => {
   }
 });
 
-// Catch all handler - serve React app for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+// Stats page route
+app.get('/code/:code', (req, res) => {
+  res.json({ message: 'Stats page - handled by frontend' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📱 Frontend: http://localhost:${PORT}`);
-  console.log(`❤️  Health: http://localhost:${PORT}/healthz`);
-  console.log(`🔗 API: http://localhost:${PORT}/api/links`);
-});
+// Export the app for Vercel
+export default app;
