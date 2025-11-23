@@ -19,16 +19,12 @@
       "dest": "/server/server.js"
     },
     {
-      "src": "/healthz",
-      "dest": "/server/server.js"
-    },
-    {
-      "src": "/([a-zA-Z0-9-_]+)",
+      "src": "/server/(.*)",
       "dest": "/server/server.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/client/dist/$1"
+      "dest": "client/dist/$1"
     }
   ]
 }
