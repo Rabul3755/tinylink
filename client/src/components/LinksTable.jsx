@@ -13,7 +13,7 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
 
     setDeletingCode(code)
     try {
-      await axios.delete(`https://tinylink-production-2e62.up.railway.app/api/links/${code}`)
+      await axios.delete(`https://tinylink-production-2e62.up.railway.app/api/links${code}`)
       onLinkDeleted(code)
     } catch (err) {
       alert('Failed to delete link')
@@ -170,7 +170,7 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-3">
                     <a
-                      href={`https://tinylink-production-2e62.up.railway.app/api/links/code/${link.code}`}
+                      href={`/${link.code}`}
                       className="text-primary-600 hover:text-primary-800 font-medium flex items-center space-x-1 transition-colors duration-200"
                     >
                       <span>📈</span>
