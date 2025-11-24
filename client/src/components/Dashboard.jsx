@@ -17,7 +17,7 @@ const Dashboard = () => {
   const fetchLinks = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('/api/links')
+      const response = await axios.get('https://tinylink-production-2e62.up.railway.app/api/links')
       const linksData = response.data
       setLinks(linksData)
       

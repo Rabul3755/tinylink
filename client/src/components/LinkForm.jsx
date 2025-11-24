@@ -15,7 +15,7 @@ const LinkForm = ({ onLinkCreated }) => {
     setSuccess('')
 
     try {
-      const response = await axios.post('/api/links', {
+      const response = await axios.post('https://tinylink-production-2e62.up.railway.app/api/links', {
         url,
         customCode: customCode || undefined
       })

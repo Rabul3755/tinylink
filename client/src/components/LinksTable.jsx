@@ -13,7 +13,7 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
 
     setDeletingCode(code)
     try {
-      await axios.delete(`/api/links/${code}`)
+      await axios.delete(`https://tinylink-production-2e62.up.railway.app/api/links/${code}`)
       onLinkDeleted(code)
     } catch (err) {
       alert('Failed to delete link')

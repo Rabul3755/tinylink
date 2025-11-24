@@ -12,7 +12,7 @@ const Stats = () => {
     const fetchStats = async () => {
       try {
         setLoading(true)
-        const response = await axios.get(`/api/links/${code}`)
+        const response = await axios.get(`https://tinylink-production-2e62.up.railway.app/api/links/${code}`)
         setLink(response.data)
         setError('')
       } catch (err) {
