@@ -170,7 +170,7 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-3">
                     <a
-                      href={`/code/${link.code}`}
+                      href={`https://tinylink-production-2e62.up.railway.app/api/links/code/${link.code}`}
                       className="text-primary-600 hover:text-primary-800 font-medium flex items-center space-x-1 transition-colors duration-200"
                     >
                       <span>📈</span>
