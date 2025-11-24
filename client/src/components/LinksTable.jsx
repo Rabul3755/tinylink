@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom' // ✅ ADD THIS IMPORT
 import axios from 'axios'
 
 const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
@@ -169,13 +170,14 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
                     {formatDate(link.last_clicked)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-3">
-                    <a
-                      href={`/code/${link.code}`}
+                    {/* ✅ FIXED - Using Link component instead of a tag */}
+                    <Link
+                      to={`/code/${link.code}`}
                       className="text-primary-600 hover:text-primary-800 font-medium flex items-center space-x-1 transition-colors duration-200"
                     >
                       <span>📈</span>
                       <span>Analytics</span>
-                    </a>
+                    </Link>
                     <button
                       onClick={() => handleDelete(link.code)}
                       disabled={deletingCode === link.code}
