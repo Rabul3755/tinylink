@@ -6,23 +6,8 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh, shortLinkBase })
   const [deletingCode, setDeletingCode] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [copiedCode, setCopiedCode] = useState(null)
-
-  const getApiUrl = () => {
-  
-    if (import.meta.env.VITE_API_URL) {
-      return import.meta.env.VITE_API_URL;
-    }
-  
-    if (window.location.hostname === 'localhost') {
-      return 'http://localhost:5001';
-    }
-    
-  
-    return window.location.origin;
-  };
-  
-  const API_URL = getApiUrl();
-  const SHORT_LINK_BASE = getApiUrl()
+ const API_URL = 'http://localhost:5001'
+  const SHORT_LINK_BASE = 'http://localhost:5001'
 
   const handleDelete = async (code) => {
     if (!window.confirm('Are you sure you want to delete this link?')) {

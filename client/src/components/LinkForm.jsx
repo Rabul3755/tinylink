@@ -7,23 +7,8 @@ const LinkForm = ({ onLinkCreated, shortLinkBase }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
-  
- const getApiUrl = () => {
-
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
-  }
-
-  if (window.location.hostname === 'localhost') {
-    return 'http://localhost:5001';
-  }
-  
-
-  return window.location.origin;
-};
-
-const API_URL = getApiUrl();
-const SHORT_LINK_BASE = getApiUrl()
+ const API_URL = 'http://localhost:5001'
+  const SHORT_LINK_BASE = 'http://localhost:5001'
 
   const handleSubmit = async (e) => {
     e.preventDefault()

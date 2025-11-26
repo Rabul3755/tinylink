@@ -4,7 +4,8 @@ import LinkForm from './LinkForm'
 import LinksTable from './LinksTable'
 import StatsCard from './StatsCard'
 
-
+const API_URL = import.meta.env.VITE_API_URL
+const SHORT_LINK_BASE = import.meta.env.VITE_API_URL || window.location.origin
 
 const Dashboard = () => {
   const [links, setLinks] = useState([])
@@ -14,25 +15,7 @@ const Dashboard = () => {
     totalLinks: 0,
     totalClicks: 0,
     mostPopular: null
-  })   
-
-
-  const getApiUrl = () => {
-
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
-  }
-
-  if (window.location.hostname === 'localhost') {
-    return 'http://localhost:5001';
-  }
-  
-
-  return window.location.origin;
-};
-
-const API_URL = getApiUrl();
-const SHORT_LINK_BASE = getApiUrl()
+  })
 
   const fetchLinks = async () => {
     try {

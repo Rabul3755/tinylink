@@ -8,24 +8,9 @@ const Stats = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)  
+  const API_URL = 'http://localhost:5001'
+  const SHORT_LINK_BASE = 'http://localhost:5001'
 
-
-  const getApiUrl = () => {
-  
-    if (import.meta.env.VITE_API_URL) {
-      return import.meta.env.VITE_API_URL;
-    }
-  
-    if (window.location.hostname === 'localhost') {
-      return 'http://localhost:5001';
-    }
-    
-  
-    return window.location.origin;
-  };
-  
-  const API_URL = getApiUrl();
-  const SHORT_LINK_BASE = getApiUrl()
   useEffect(() => {
     const fetchStats = async () => {
       try {
