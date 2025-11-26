@@ -6,15 +6,13 @@ const { Pool } = pg;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
 export const initDB = async () => {
   try {
-    console.log("DATABASE_URL =", process.env.DATABASE_URL);
-
+    console.log("Initializing database...");
+    
     const client = await pool.connect();
 
     await client.query(`
@@ -33,9 +31,9 @@ export const initDB = async () => {
     `);
 
     client.release();
-    console.log("Database initialized successfully");
+    console.log("✅ Database initialized successfully");
   } catch (err) {
-    console.error("Database initialization error:", err);
+    console.error("❌ Database initialization error:", err);
   }
 };
 

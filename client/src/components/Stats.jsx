@@ -4,15 +4,18 @@ import axios from 'axios'
 
 const Stats = () => {
   const { code } = useParams()
-  const [link, setLink] = useState(null)
+  const [link, setLink] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [copied, setCopied] = useState(false)  
+  const API_URL = 'http://localhost:5001'
+  const SHORT_LINK_BASE = 'http://localhost:5001'
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
         setLoading(true)
-        const response = await axios.get(`https://tinylink-production-2e62.up.railway.app/api/links/${code}`)
+        const response = await axios.get(`${API_URL}/api/links/${code}`)
         setLink(response.data)
         setError('')
       } catch (err) {
@@ -121,14 +124,19 @@ const Stats = () => {
               <label className="block text-sm font-semibold text-gray-700 mb-3">Short URL</label>
               <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-3">
                 <code className="bg-gray-100 px-4 py-3 rounded-lg text-sm font-mono flex-1 border border-gray-200">
-                  {window.location.origin}/{link.code}
+                  {SHORT_LINK_BASE}/{link.code}
                 </code>
+
                 <button
-                  onClick={() => navigator.clipboard.writeText(`${window.location.origin}/${link.code}`)}
+                  onClick={() => {
+                    navigator.clipboard.writeText(`${SHORT_LINK_BASE}/${link.code}`)
+                    setCopied(true)
+                    setTimeout(() => setCopied(false), 2000)
+                  }}
                   className="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium flex items-center space-x-2 justify-center sm:justify-start"
                 >
                   <span>📋</span>
-                  <span>Copy</span>
+                  <span>{copied ? "Copied!" : "Copy"}</span>
                 </button>
               </div>
             </div>
@@ -150,6 +158,7 @@ const Stats = () => {
                 <p className="text-gray-500 text-sm">Enable QR code generation in settings</p>
               </div>
             </div>
+
           </div>
         </div>
       </div>

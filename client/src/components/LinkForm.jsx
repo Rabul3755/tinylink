@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-const LinkForm = ({ onLinkCreated }) => {
+const LinkForm = ({ onLinkCreated, shortLinkBase }) => {
   const [url, setUrl] = useState('')
   const [customCode, setCustomCode] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+ const API_URL = 'http://localhost:5001'
+  const SHORT_LINK_BASE = 'http://localhost:5001'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -15,7 +17,7 @@ const LinkForm = ({ onLinkCreated }) => {
     setSuccess('')
 
     try {
-      const response = await axios.post('https://tinylink-production-2e62.up.railway.app/api/links', {
+      const response = await axios.post(`${API_URL}/api/links`, {
         url,
         customCode: customCode || undefined
       })
@@ -74,7 +76,7 @@ const LinkForm = ({ onLinkCreated }) => {
           </label>
           <div className="relative">
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-              {window.location.origin}/
+              {shortLinkBase}/
             </div>
             <input
               type="text"

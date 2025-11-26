@@ -4,6 +4,9 @@ import LinkForm from './LinkForm'
 import LinksTable from './LinksTable'
 import StatsCard from './StatsCard'
 
+const API_URL = import.meta.env.VITE_API_URL
+const SHORT_LINK_BASE = import.meta.env.VITE_API_URL || window.location.origin
+
 const Dashboard = () => {
   const [links, setLinks] = useState([])
   const [loading, setLoading] = useState(true)
@@ -17,7 +20,7 @@ const Dashboard = () => {
   const fetchLinks = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('https://tinylink-production-2e62.up.railway.app/api/links')
+      const response = await axios.get(`${API_URL}/api/links`)
       const linksData = response.data
       setLinks(linksData)
       
@@ -102,7 +105,8 @@ const Dashboard = () => {
         )}
 
         <div className="mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <LinkForm onLinkCreated={handleLinkCreated} />
+          {/* Pass SHORT_LINK_BASE to LinkForm */}
+          <LinkForm onLinkCreated={handleLinkCreated} shortLinkBase={SHORT_LINK_BASE} />
         </div>
 
         {error && (
@@ -120,11 +124,13 @@ const Dashboard = () => {
         )}
 
         <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          {/* Pass SHORT_LINK_BASE to LinksTable */}
           <LinksTable 
             links={links} 
             loading={loading}
             onLinkDeleted={handleLinkDeleted}
             onRefresh={fetchLinks}
+            shortLinkBase={SHORT_LINK_BASE}
           />
         </div>
 

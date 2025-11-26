@@ -64,12 +64,14 @@ export default defineConfig({
     })
   ],
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5001',  // ✅ Fixed port
-        changeOrigin: true,
-      },
-    },
+    port: 5173,
+    // Remove the proxy - it's causing conflicts
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:5001',
+    //     changeOrigin: true,
+    //   },
+    // },
   },
   build: {
     outDir: 'dist',
@@ -77,7 +79,5 @@ export default defineConfig({
     minify: 'esbuild',
     target: 'esnext',
   },
-  esbuild: {
-    drop: ['console', 'debugger'],
-  },
+ 
 })

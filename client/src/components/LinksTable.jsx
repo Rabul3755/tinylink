@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom' // ✅ ADD THIS IMPORT
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
+const LinksTable = ({ links, loading, onLinkDeleted, onRefresh, shortLinkBase }) => {
   const [deletingCode, setDeletingCode] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [copiedCode, setCopiedCode] = useState(null)
+ const API_URL = 'http://localhost:5001'
+  const SHORT_LINK_BASE = 'http://localhost:5001'
 
   const handleDelete = async (code) => {
     if (!window.confirm('Are you sure you want to delete this link?')) {
@@ -14,7 +16,7 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
 
     setDeletingCode(code)
     try {
-      await axios.delete(`https://tinylink-production-2e62.up.railway.app/api/links/${code}`)
+      await axios.delete(`${API_URL}/api/links/${code}`)
       onLinkDeleted(code)
     } catch (err) {
       alert('Failed to delete link')
@@ -129,7 +131,7 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
                             {link.code}
                           </span>
                           <button
-                            onClick={() => copyToClipboard(`${window.location.origin}/${link.code}`, link.code)}
+                            onClick={() => copyToClipboard(`${shortLinkBase}/${link.code}`, link.code)}
                             className={`p-1 rounded transition-colors duration-200 ${
                               copiedCode === link.code 
                                 ? 'text-green-600 bg-green-50' 
@@ -141,7 +143,7 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
                           </button>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">
-                          {window.location.host}/{link.code}
+                          {new URL(shortLinkBase).host}/{link.code}
                         </p>
                       </div>
                     </div>
@@ -170,7 +172,6 @@ const LinksTable = ({ links, loading, onLinkDeleted, onRefresh }) => {
                     {formatDate(link.last_clicked)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-3">
-                    {/* ✅ FIXED - Using Link component instead of a tag */}
                     <Link
                       to={`/code/${link.code}`}
                       className="text-primary-600 hover:text-primary-800 font-medium flex items-center space-x-1 transition-colors duration-200"
